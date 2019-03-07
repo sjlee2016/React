@@ -6,6 +6,7 @@ const User = (props) => {
         <p> ID : {props.id} </p> 
         <p> Password: {props.password} </p> 
         <p> {props.children} </p>
+        <input type="text" onChange={props.change}/> 
         </div>
     )
 }
