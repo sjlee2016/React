@@ -9,7 +9,8 @@ class App extends Component {
       {id:"sejin", password:"password"},
       {id:"test", password:"test"} 
     ],
-    someOther: 'hello'
+    someOther: 'hello',
+    showUser: false 
   }; 
 
 
@@ -35,13 +36,33 @@ class App extends Component {
   })
 }
 
+toggleUsersHandler = () => {
+  const doesShow = this.state.showUser;
+  this.setState({showUser : !doesShow})
+
+}
   render() {
     return (
       <div className="App">
-      <User id={this.state.users[0].id} password={this.state.users[0].password}> Welcome </User>
-      <User id={this.state.users[1].id} password={this.state.users[1].password} change={this.inputChangedHandler}> Welcome </User>
+      <h1> hi i am react app </h1> 
+      <button onClick={this.toggleUsersHandler}> Toggle </button> 
+      { 
+        this.state.showUser == true ? 
+      <div> 
+      <User 
+      id={this.state.users[0].id} 
+      password={this.state.users[0].password}> Welcome 
+       </User>
+
+      <User 
+      id={this.state.users[1].id} 
+      password={this.state.users[1].password} 
+      change={this.inputChangedHandler}> Welcome
+        </User>
       <button onClick={this.userIdChangedHandler}> Click Me </button> 
-      </div>
+      </div> : null 
+      }
+      </div> 
     );
   }
 }
