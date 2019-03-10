@@ -1,0 +1,28 @@
+.User{
+    top:50%;
+    left:50%;
+    position: relative;
+    margin-right:-50%;
+    height:10em;
+    width: 20rem;
+    margin:0;
+    transform: translate(-50%,0%);
+    background-image: linear-gradient(rgba(32, 214, 47, 0.822),rgba(32,214,47,0.231));
+    border-radius: 10px;
+    box-shadow: 10px 10px rgba(0,0,0,0.25);
+}
+.red {
+    color:red;
+}
+input {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-color:transparent;
+}
+
+.id p{
+    color:red;
+    margin-top: 10px;
+    font-size:30px;
+}
