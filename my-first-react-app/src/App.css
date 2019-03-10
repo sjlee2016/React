@@ -31,3 +31,16 @@
     transform: rotate(360deg);
   }
 }
+.App button {
+  border: 1px solid blue;
+  padding: 16px;
+  background-color: green;
+  font: inherit;
+  color:white;
+
+}
+
+.App button:hover{
+  background-color:lightgreen;
+  
+}

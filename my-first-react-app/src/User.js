@@ -1,6 +1,5 @@
 import React from 'react';
-import Radium, {StyleRoot} from 'radium'; 
-
+import styles from './User.css'; 
 const User = (props) => {
     const style = {
         '@media(min-width:500px)': {
@@ -8,16 +7,14 @@ const User = (props) => {
         }
     }
     return (
-        <StyleRoot>
         <div className="User">
-        <p style={style}> Email : {props.email} </p>
+        <p style={styles['User']}> Email : {props.email} </p>
         <p> Password: {props.password} </p> 
         <p> {props.children} </p>
         <input type="text" onChange={props.changed}/> 
         <button onClick={props.click}> click to delete me </button>
         </div>
-        </StyleRoot> 
     )
 }
 
-export default Radium(User);  
+export default User;  
