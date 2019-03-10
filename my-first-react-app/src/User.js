@@ -1,24 +1,23 @@
-import React from 'react'
-
+import React from 'react';
+import Radium, {StyleRoot} from 'radium'; 
 
 const User = (props) => {
-    let classArr = [];
-
-    if(props.email.length <= 5){
-        classArr.push('bold'); 
-    }
-    if(props.email.length <= 1) {
-        classArr.push('red');
+    const style = {
+        '@media(min-width:500px)': {
+            width: '450px'
+        }
     }
     return (
+        <StyleRoot>
         <div className="User">
-        <p style={classArr}> Email : {props.email} </p>
+        <p style={style}> Email : {props.email} </p>
         <p> Password: {props.password} </p> 
         <p> {props.children} </p>
         <input type="text" onChange={props.changed}/> 
         <button onClick={props.click}> click to delete me </button>
         </div>
+        </StyleRoot> 
     )
 }
 
-export default User 
+export default Radium(User);  

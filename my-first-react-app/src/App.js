@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import './User.css'
+import './User.css';
+import Radium, {StyleRoot} from 'radium';   
 import User from './User.js'
 class App extends Component {
    state = {
@@ -40,7 +41,9 @@ toggleUsersHandler = () => {
 
 }
   render() {
-  
+    const style = {
+      
+    }
     let users = null; 
     if (this.state.showUser) {
       users = (
@@ -60,13 +63,15 @@ toggleUsersHandler = () => {
     }
     
     return (
+      <StyleRoot>
       <div className="App">
       <h1> hi i am react app </h1> 
       <button onClick={this.toggleUsersHandler}> Toggle </button> 
       {users}
       </div> 
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
