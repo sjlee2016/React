@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import styles from './App.css';
-import './User.css'; 
-import User from './User.js'
+import classes from './App.css';
+import Users from '../components/Users/Users'
+import Cockpit from '../components/Cockpit'
 class App extends Component {
    state = {
     users : 
@@ -43,26 +43,20 @@ toggleUsersHandler = () => {
     let users = null; 
     if (this.state.showUser) {
       users = (
-        <div> 
-          {this.state.users.map((user, index) => {
-            return <User
-            email={user.email}
-            password={user.password}  
-            changed={(event)=> this.userIdChangedHandler(event,user.id)}
-            click={() => this.deleteUserHandler(index)}
-            key={user.key}
-            />
-          })}  
-        </div>
-
+          <Users 
+            users={this.state.users}
+            delete={this.userIdChangedHandler}
+            changed={this.deleteUserHandler} > 
+           </Users>
       );
     }
     
     return (
-      <div className="App">
-      <h1> hi i am react app </h1> 
-      <button onClick={this.toggleUsersHandler}> Toggle </button> 
-      {users}
+      <div className={classes.App}>
+        <Cockpit showUsers={this.state.showUser} users=  {this.state.users}
+        click={this.toggleUsersHandler}
+        />
+      
       </div> 
     );
   }
