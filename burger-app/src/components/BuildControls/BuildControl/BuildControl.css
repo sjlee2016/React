@@ -3,29 +3,36 @@
     justify-content: space-between;
     align-items: center;
     margin: 5px 0;
+    
 }
 
+.BuildControl .Label{
+    color:black;
+    margin:10px;
+    font-size: 20px;
+}
 .BuildControl button{
     display: block;
     font: inherit;
     padding: 5px;
     margin: 0 5px;
+    border: 1px solid black;
     width: 80px;
-    border: 1px solid #aa6817;
-    width: 80px;
-
+    border-width: thick;
 }
 
 
 .BuildControl .Less {
     background-color: #D39952;
+    background: red;
     color:white;
-    
+    border-radius:10px;
 }
 
 
 .BuildControl .More{
     background-color: #8F5E1E;
+    background: green;
     color:white;
-    
+    border-radius: 10px;
 }

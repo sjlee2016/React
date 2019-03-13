@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import styles from './BurgerIngradient.css';
 class BurgerIngradient extends Component {
-    
 
     render(){
         let ingradient = null;
