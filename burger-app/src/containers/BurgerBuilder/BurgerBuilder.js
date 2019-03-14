@@ -5,7 +5,6 @@ import BuildControls from '../../components/BuildControls/BuildControls';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Modal from '../../components/UI/Modal';
 import BackDrop from '../../components/UI/BackDrop/BackDrop';
-
 const INGRADIENT_PRICES = {
     salad : 0.5,
     bacon: 0.4,
