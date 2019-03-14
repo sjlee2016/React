@@ -14,14 +14,12 @@ const controls = [
 const buildControls = (props) => {
    return  (
    <div className={styles.BuildControls}>
-
     <p className={styles.price}> <strong> Total price : {props.totalPrice}  </strong>  </p>
     {controls.map(ctrl => (
         <BuildControl key={ctrl.label} label={ctrl.label} added={()=> props.ingradientsAdded(ctrl.type)} removed={()=> props.ingradientsRemoved(ctrl.type)} />
     ))}
-    <button disabled={!props.purchasable} className={styles.orderButton} > ORDER NOW </button> 
+    <button disabled={!props.purchasable} className={styles.orderButton} onClick={props.checkout} > ORDER NOW </button> 
     </div> 
-
    );
 }
 
