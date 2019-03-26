@@ -3,6 +3,8 @@ import Button from '../components/Button/Button';
 import Input from '../components/Inputs/Input';
 import NumberInput from '../components/Inputs/NumberInput'; 
 import SelectInput from '../components/Inputs/SelectInput';
+import  { Redirect } from 'react-router-dom'
+
 class Register extends Component {
     constructor(props){
         super(props)
@@ -16,20 +18,30 @@ class Register extends Component {
             emailIsRightFormat: false,
             passwordIsRightFormat: false,
             usernameIsNotTaken : false,
-            schoolYearIsRightForMat: false 
+            schoolYearIsRightForMat: false,
+            loginSuccessful: false, 
+            emailAlreadyRegistered: false,
+            usernameAlreadyRegistered: false
         };
     }
 
+    redirect = () => {
+        if(this.state.loginSuccessful) { 
+            return (<Redirect to='/login'  />);
+        }
+    }
     isNotEmpty = (str) => {
         return str!== null && str.length !== 0 
     }
     checkIfSatisified = (state) => {
-        if(this.isNotEmpty(state.password)&&this.isNotEmpty(state.username)&& this.isNotEmpty(state.email) &&
-    this.isNotEmpty(state.schoolYear) && this.isNotEmpty(state.major) && state.emailIsRightFormat && state.usernameIsNotTaken && state.schoolYearIsRightForMat){
-            this.setState({allFilled: true});
-        }else {
-            this.setState({allFilled: false});
-        }
+    //     if(this.isNotEmpty(state.password)&&this.isNotEmpty(state.username)&& this.isNotEmpty(state.email) &&
+    // this.isNotEmpty(state.schoolYear) && this.isNotEmpty(state.major) && state.emailIsRightFormat && state.usernameIsNotTaken && state.schoolYearIsRightForMat){
+    //         this.setState({allFilled: true});
+    //     }else {
+    //         this.setState({allFilled: false});
+    //     }
+
+    this.setState({allFilled:true})
     }
     
     handleUsernameChange = (event) => {
@@ -125,27 +137,43 @@ class Register extends Component {
 
 
 
-    sendData = () => {
-        fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-         'Content-Type': 'application/json',
-        },
-  body: JSON.stringify({
-   state: this.state
-  }),
-}).then((response) => response.json())
-    .then((responseJson) => {
-      return responseJson.movies;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-    }
+    sendData =  async e => {
+            e.preventDefault();
+            fetch('/api/register',
+             {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({    username: this.state.username, 
+                                        email: this.state.email,
+                                        password:this.state.password,
+                                        schoolYear: this.state.schoolYear,
+                                        major: this.state.major }),
+            })
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    if(data.result == "successful"){
+                       this.setState({loginSuccessful : true}); 
+                    }else if (data.result == "unsuccesful")
+                    {
+                        this.setState({
+                        usernameAlreadyRegistered: true }); 
+
+                    }else if(data.result == "email already registered")
+                    {
+                        this.setState({
+                        emailAlreadyRegistered: true }); 
+                    }
+                }
+            )
+        };
+    
     render(){
         return <div>
-            Register 
+            Register
+            {this.redirect()}
             <form> 
                 <Input label="username" labelName="username" type="text" value="username" change={this.handleUsernameChange} displayWarning={!this.state.usernameIsNotTaken} warning={"Username should contain more than 3 alphabet letters and is longer than 8 characters"} /> 
                 <Input label="email" labelName="email" type="text" value="email" change={this.handleEmailChange} displayWarning={!this.state.emailIsRightFormat} warning={"Plese use your sogang email"} /> 
