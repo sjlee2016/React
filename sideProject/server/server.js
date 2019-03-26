@@ -8,31 +8,44 @@ var moment = require('moment');
 var User = require('./Model/User'); 
 mongoose.connect('mongodb://localhost:27017/side_project');
 
+var auth = require('passport-local-authenticate');
 
 
 var app = express(),
 passport = require("passport"),
-LocalStrategy = require("passport-local").Strategy;
+LocalStrategy = require("passport-local");
 app.use(require("express-session")({
     secret: "this project is made by sejin",
     resave: false,
     saveUninitialized: false 
 })); 
-
 app.use(passport.initialize());
 app.use(passport.session());
-
+//passport.use(new LocalStrategy(User.authenticate()));
 passport.use(new LocalStrategy(
     function(username, password, done) {
+    
       User.findOne({ username: username }, function(err, user) {
-        if (err) { return done(err); }
+        if (err) { 
+            console.log("1");
+            return done(err);
+        }
         if (!user) {
+
+            console.log("2");
           return done(null, false, { message: 'Incorrect username.' });
         }
-        if (!user.validPassword(password)) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-        return done(null, user);
+        user.comparePassword(password, function(err, isMatch) {
+            if (err) throw err;
+            if (!isMatch){
+                return done(null, false, { message: 'Incorrect password' });
+            }else
+            {
+
+        return done(null, true);
+            }
+        });
+
       });
     }
 )
@@ -71,9 +84,14 @@ app.post('/api/register', (req,res) => {
         }
     }); 
 
-	User.register(new User({username: req.body.username,    email : req.body.email, 
-        emailIsAuthenticated: false, major: req.body.major, schoolYear: req.body.schoolYear  }), req.body.password, function(err, user){
-        if(err){
+    var new_user = new User({
+        username: req.body.username,    email : req.body.email, 
+         emailIsAuthenticated: false, major: req.body.major, schoolYear: req.body.schoolYear  
+        , password : req.body.password
+     });
+     console.log(new_user);
+      new_user.save(function(err) {
+       if(err){
             res.json({"result": "unsuccessful"});
         }else {
         passport.authenticate("local")(req,res,function(){
